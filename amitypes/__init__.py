@@ -48,7 +48,26 @@ class Array3d(type):
 Array = Union[Array2d, Array1d, List[float]]
 
 
-HSDPeaks = Dict[int, Tuple[List[int], List[Array]]]
+Peaks = Tuple[List[int], List[Array]]
+
+
+HSDPeaks = TypedDict("HSDPeaks",
+                     {
+                        '0': Peaks,
+                        '1': Peaks,
+                        '2': Peaks,
+                        '3': Peaks,
+                        '4': Peaks,
+                        '5': Peaks,
+                        '6': Peaks,
+                        '7': Peaks,
+                        '8': Peaks,
+                        '9': Peaks,
+                        '10': Peaks,
+                        '11': Peaks,
+                        '12': Peaks,
+                     },
+                     total=False)
 
 
 HSDWaveforms = TypedDict("HSDWaveforms",
@@ -72,3 +91,5 @@ HSDWaveforms = TypedDict("HSDWaveforms",
                           '15': Array1d,
                          },
                          total=False)
+
+

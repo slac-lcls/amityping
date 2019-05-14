@@ -2,7 +2,7 @@ import io
 import re
 from setuptools import setup
 
-with io.open('amityping/__init__.py', 'rt', encoding='utf8') as f:
+with io.open('amitypes/__init__.py', 'rt', encoding='utf8') as f:
     version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
 
 setup(
@@ -13,9 +13,9 @@ setup(
     author='Seshu Yamajala, Daniel Damiani',
     author_email='',
     url='http://github.com/slac-lcls/amityping',
-    packages=["amityping"],
+    packages=["amitypes"],
     package_data={
-        "amityping": ["py.typed"],
+        "amitypes": ["py.typed"],
     },
     install_requires=['numpy', 'mypy_extensions'],
     classifiers=[
