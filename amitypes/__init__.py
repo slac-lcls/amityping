@@ -3,7 +3,7 @@ from typing import Union, List, Tuple, Dict
 from mypy_extensions import TypedDict
 
 
-__version__ = '1.0.1'
+__version__ = '1.0.2'
 
 
 class Array1d(type):
@@ -66,6 +66,9 @@ HSDPeaks = TypedDict("HSDPeaks",
                         '10': Peaks,
                         '11': Peaks,
                         '12': Peaks,
+                        '13': Peaks,
+                        '14': Peaks,
+                        '15': Peaks,
                      },
                      total=False)
 
@@ -93,3 +96,4 @@ HSDWaveforms = TypedDict("HSDWaveforms",
                          total=False)
 
 
+HSDTypes = {HSDPeaks, HSDWaveforms}
