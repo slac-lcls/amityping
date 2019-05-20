@@ -1,9 +1,9 @@
 import numpy as np
-from typing import Union, List, Tuple, Dict
+from typing import Union, List, Tuple
 from mypy_extensions import TypedDict
 
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 
 class Array1d(type):
@@ -48,7 +48,7 @@ class Array3d(type):
 Array = Union[Array2d, Array1d, List[float]]
 
 
-Peaks = Tuple[List[int], List[Array]]
+Peaks = Tuple[List[int], List[Array1d]]
 
 
 HSDPeaks = TypedDict("HSDPeaks",
