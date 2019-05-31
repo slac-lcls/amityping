@@ -3,7 +3,7 @@ from typing import Union, List, Tuple, Dict, TypeVar
 from mypy_extensions import TypedDict
 
 
-__version__ = '1.0.3'
+__version__ = '1.0.4'
 
 
 class Array1d(type):
