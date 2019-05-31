@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Union, List, Tuple
+from typing import Union, List, Tuple, Dict, TypeVar
 from mypy_extensions import TypedDict
 
 
@@ -51,30 +51,35 @@ Array = Union[Array2d, Array1d, List[float]]
 Peaks = Tuple[List[int], List[Array1d]]
 
 
-HSDPeaks = TypedDict("HSDPeaks",
-                     {
-                        '0': Peaks,
-                        '1': Peaks,
-                        '2': Peaks,
-                        '3': Peaks,
-                        '4': Peaks,
-                        '5': Peaks,
-                        '6': Peaks,
-                        '7': Peaks,
-                        '8': Peaks,
-                        '9': Peaks,
-                        '10': Peaks,
-                        '11': Peaks,
-                        '12': Peaks,
-                        '13': Peaks,
-                        '14': Peaks,
-                        '15': Peaks,
-                     },
-                     total=False)
+HSDSegmentPeaks = TypedDict(
+                    "HSDPeaks",
+                    {
+                       '0': Peaks,
+                       '1': Peaks,
+                       '2': Peaks,
+                       '3': Peaks,
+                       '4': Peaks,
+                       '5': Peaks,
+                       '6': Peaks,
+                       '7': Peaks,
+                       '8': Peaks,
+                       '9': Peaks,
+                       '10': Peaks,
+                       '11': Peaks,
+                       '12': Peaks,
+                       '13': Peaks,
+                       '14': Peaks,
+                       '15': Peaks,
+                    },
+                    total=False)
 
 
-HSDWaveforms = TypedDict("HSDWaveforms",
-                         {
+HSDPeaks = Dict[int, HSDSegmentPeaks]
+
+
+HSDSegmentWaveforms = TypedDict(
+                        "HSDWaveforms",
+                        {
                           'times': Array1d,
                           '0': Array1d,
                           '1': Array1d,
@@ -92,8 +97,14 @@ HSDWaveforms = TypedDict("HSDWaveforms",
                           '13': Array1d,
                           '14': Array1d,
                           '15': Array1d,
-                         },
-                         total=False)
+                        },
+                        total=False)
 
 
-HSDTypes = {HSDPeaks, HSDWaveforms}
+HSDWaveforms = Dict[int, HSDSegmentWaveforms]
+
+
+HSDAssemblies = TypeVar('HSDAssemblies')
+
+
+HSDTypes = {HSDPeaks, HSDWaveforms, HSDAssemblies}
