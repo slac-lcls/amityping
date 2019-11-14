@@ -1,4 +1,5 @@
 import pytest
+import numpy
 import amitypes
 
 
@@ -11,6 +12,7 @@ def type_map():
         (amitypes.HSDPeaks, 'typing.Dict[int, amitypes.HSDSegmentPeaks]'),
         (amitypes.HSDWaveforms, 'typing.Dict[int, amitypes.HSDSegmentWaveforms]'),
         (list, 'list'),
+        (numpy.float64, 'numpy.float64'),
     ]
 
 

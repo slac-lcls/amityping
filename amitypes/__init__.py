@@ -1,5 +1,5 @@
 import typing
-import numpy as np
+import numpy
 from mypy_extensions import TypedDict
 
 
@@ -47,7 +47,7 @@ class Array1dMeta(ArrayMeta):
 
     @classmethod
     def __instancecheck__(cls, inst) -> bool:
-        if not isinstance(inst, np.ndarray):
+        if not isinstance(inst, numpy.ndarray):
             return False
 
         if inst.ndim != 1:
@@ -60,7 +60,7 @@ class Array2dMeta(ArrayMeta):
 
     @classmethod
     def __instancecheck__(cls, inst) -> bool:
-        if not isinstance(inst, np.ndarray):
+        if not isinstance(inst, numpy.ndarray):
             return False
 
         if inst.ndim != 2:
@@ -73,7 +73,7 @@ class Array3dMeta(ArrayMeta):
 
     @classmethod
     def __instancecheck__(cls, inst) -> bool:
-        if not isinstance(inst, np.ndarray):
+        if not isinstance(inst, numpy.ndarray):
             return False
 
         if inst.ndim != 3:
