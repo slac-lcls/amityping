@@ -1,5 +1,6 @@
 import typing
 import numpy
+import inspect
 from mypy_extensions import TypedDict
 
 
@@ -9,6 +10,7 @@ __version__ = '1.0.5'
 __all__ = [
     'dumps',
     'loads',
+    'NumPyTypeDict',
     'Array',
     'Array1d',
     'Array2d',
@@ -37,6 +39,28 @@ def dumps(cls):
 
 def loads(type_str):
     return eval(type_str.replace('amitypes.', ''))
+
+
+def _map_numpy_types():
+    nptypemap = {}
+    for name, dtype in inspect.getmembers(numpy, lambda x: inspect.isclass(x) and issubclass(x, numpy.generic)):
+        try:
+            ptype = None
+            if 'time' in name:
+                ptype = type(dtype(0, 'D').item())
+            elif 'object' not in name:
+                ptype = type(dtype(0).item())
+
+            # if it is still a numpy dtype don't make a mapping
+            if not issubclass(ptype, numpy.generic):
+                nptypemap[dtype] = ptype
+        except TypeError:
+            pass
+
+    return nptypemap
+
+
+NumPyTypeDict = _map_numpy_types()
 
 
 class ArrayMeta(type):
