@@ -4,7 +4,7 @@ import inspect
 from mypy_extensions import TypedDict
 
 
-__version__ = '1.0.5'
+__version__ = '1.0.8'
 
 
 __all__ = [
