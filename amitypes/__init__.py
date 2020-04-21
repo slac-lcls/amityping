@@ -1,7 +1,8 @@
+import sys
 import typing
 import numpy
 import inspect
-from mypy_extensions import TypedDict
+from mypy_extensions import TypedDict, _TypedDictMeta
 
 
 __version__ = '1.0.8'
@@ -31,6 +32,8 @@ def dumps(cls):
             return cls.__name__
         else:
             return "%s.%s" % (cls.__module__, cls.__name__)
+    elif issubclass(type(cls), _TypedDictMeta):
+        return "TypedDict('%s', %s)" % (cls.__name__, {k: dumps(v) for k, v in cls.__annotations__.items()})
     elif issubclass(type(cls), ArrayMeta):
         return "%s.%s" % (cls.__module__, cls.__name__)
     else:
@@ -38,7 +41,10 @@ def dumps(cls):
 
 
 def loads(type_str):
-    return eval(type_str.replace('amitypes.', ''))
+    cls = eval(type_str.replace('amitypes.', ''))
+    if issubclass(type(cls), _TypedDictMeta):
+        setattr(sys.modules[__name__], cls.__name__, cls)
+    return cls
 
 
 def _map_numpy_types():
