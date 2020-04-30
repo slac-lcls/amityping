@@ -1,7 +1,10 @@
 import sys
+import abc
 import typing
 import numpy
 import inspect
+import importlib
+import dataclasses
 from mypy_extensions import TypedDict, _TypedDictMeta
 
 
@@ -12,6 +15,7 @@ __all__ = [
     'dumps',
     'loads',
     'NumPyTypeDict',
+    'DataSource',
     'Array',
     'Array1d',
     'Array2d',
@@ -27,7 +31,7 @@ __all__ = [
 
 
 def dumps(cls):
-    if type(cls) == type:
+    if type(cls) in [type, abc.ABCMeta]:
         if cls.__module__ in ['builtins', '__main__']:
             return cls.__name__
         else:
@@ -41,10 +45,21 @@ def dumps(cls):
 
 
 def loads(type_str):
+    _import_module(type_str)
     cls = eval(type_str.replace('amitypes.', ''))
     if issubclass(type(cls), _TypedDictMeta):
         setattr(sys.modules[__name__], cls.__name__, cls)
     return cls
+
+
+def _import_module(type_str):
+    parts = type_str.split('.')
+    if len(parts) > 1:
+        try:
+            mod = importlib.import_module(parts[0])
+            setattr(sys.modules[__name__], mod.__name__, mod)
+        except ModuleNotFoundError:
+            pass
 
 
 def _map_numpy_types():
@@ -67,6 +82,13 @@ def _map_numpy_types():
 
 
 NumPyTypeDict = _map_numpy_types()
+
+
+@dataclasses.dataclass
+class DataSource:
+    cfg: typing.Dict
+    run: typing.Any = None
+    evt: typing.Any = None
 
 
 class ArrayMeta(type):
