@@ -4,15 +4,28 @@ import amitypes
 
 
 @pytest.fixture(scope='function')
-def type_map():
+def flattener():
+    def flattener_func(cls):
+        if hasattr(cls, "__name__"):
+            if cls.__module__ in ['builtins', '__main__']:
+                return cls, cls.__name__
+            else:
+                return cls, "%s.%s" % (cls.__module__, cls.__name__)
+        else:
+            return cls, str(cls)
+    return flattener_func
+
+
+@pytest.fixture(scope='function')
+def type_map(flattener):
     return [
-        (amitypes.Array1d, 'amitypes.Array1d'),
-        (amitypes.Array2d, 'amitypes.Array2d'),
-        (amitypes.Array3d, 'amitypes.Array3d'),
-        (amitypes.HSDPeaks, 'typing.Dict[int, amitypes.HSDSegmentPeaks]'),
-        (amitypes.HSDWaveforms, 'typing.Dict[int, amitypes.HSDSegmentWaveforms]'),
-        (list, 'list'),
-        (numpy.float64, 'numpy.float64'),
+        flattener(amitypes.Array1d),
+        flattener(amitypes.Array2d),
+        flattener(amitypes.Array3d),
+        flattener(amitypes.HSDPeaks),
+        flattener(amitypes.HSDWaveforms),
+        flattener(list),
+        flattener(numpy.float64),
     ]
 
 

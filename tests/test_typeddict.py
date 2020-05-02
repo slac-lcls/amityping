@@ -13,7 +13,6 @@ TEST_PARAMS = [
 
 @pytest.fixture(scope='function')
 def typed_dict(request):
-    print(request.param)
     name, fields = request.param
     return name, fields, amitypes.TypedDict(name, fields)
 
