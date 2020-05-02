@@ -48,8 +48,10 @@ class Serializable:
 
 @dataclasses.dataclass
 class Detector(Serializable):
-    dtype: str
-    data: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
+    name: str
+    src: str
+    type: str
+    det: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
 
 
 @dataclasses.dataclass
