@@ -9,7 +9,7 @@ from amitypes.hsd import *      # noqa ignore=F405
 from amitypes.source import *   # noqa ignore=F405
 
 
-__version__ = '1.0.9'
+__version__ = '1.1.0'
 
 
 def dumps(cls):
