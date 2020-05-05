@@ -6,6 +6,7 @@ import amitypes as at
 
 TEST_PARAMS = [
     at.DataSource({'type': 'psana'}, 'fake_run', 'fake_evt'),
+    at.Group('mygrp', 'hdf5', 'cspad_1234'),
     at.Detector('xtcav', 'psana', 'camera', [1, 2, 3, 4]),
 ]
 
@@ -45,3 +46,16 @@ def test_serialize(orig, serializers):
                 assert getattr(reloaded, field.name) == field.default
             else:
                 assert getattr(reloaded, field.name) == getattr(orig, field.name)
+
+
+@pytest.mark.parametrize('data', [{}, {'cat': 'bat', 'goat': 'boat'}])
+def test_group(data):
+    grp = at.Group('mygrp', 'hdf5', 'cspad_1234', data)
+
+    assert bool(grp) is bool(data)
+
+    assert len(grp) == len(data)
+
+    for key in data:
+        assert key in grp
+        assert grp[key] == data[key]

@@ -1,9 +1,11 @@
 import typing
 import dataclasses
+import collections.abc
 
 
 __all__ = [
     'Detector',
+    'Group',
     'DataSource',
     'PyArrowTypes',
 ]
@@ -55,6 +57,23 @@ class Detector(Serializable):
 
 
 @dataclasses.dataclass
+class Group(Serializable, collections.abc.Mapping):
+    name: str
+    src: str
+    type: str
+    data: typing.Dict = dataclasses.field(default_factory=dict)
+
+    def __getitem__(self, key):
+        return self.data[key]
+
+    def __iter__(self):
+        return iter(self.data)
+
+    def __len__(self):
+        return len(self.data)
+
+
+@dataclasses.dataclass
 class DataSource(Serializable):
     cfg: typing.Dict
     key: int = 0
@@ -62,4 +81,4 @@ class DataSource(Serializable):
     evt: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
 
 
-PyArrowTypes = {Detector, DataSource}
+PyArrowTypes = {Detector, Group, DataSource}
