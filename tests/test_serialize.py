@@ -1,5 +1,6 @@
 import pytest
 import numpy
+import typing
 import amitypes
 
 
@@ -17,16 +18,27 @@ def flattener():
 
 
 @pytest.fixture(scope='function')
-def type_map(flattener):
+def types():
     return [
-        flattener(amitypes.Array1d),
-        flattener(amitypes.Array2d),
-        flattener(amitypes.Array3d),
-        flattener(amitypes.HSDPeaks),
-        flattener(amitypes.HSDWaveforms),
-        flattener(list),
-        flattener(numpy.float64),
+        amitypes.Array1d,
+        amitypes.Array2d,
+        amitypes.Array3d,
+        amitypes.Peaks,
+        amitypes.HSDPeaks,
+        amitypes.HSDSegmentPeaks,
+        amitypes.HSDWaveforms,
+        amitypes.HSDSegmentWaveforms,
+        amitypes.HSDAssemblies,
+        int,
+        list,
+        numpy.float64,
+        typing.Union,
     ]
+
+
+@pytest.fixture(scope='function')
+def type_map(types, flattener):
+    return [flattener(t) for t in types]
 
 
 def test_dumps(type_map):
@@ -39,3 +51,8 @@ def test_loads(type_map):
     for expected, objstr in type_map:
         # check that the object loads as expected
         assert amitypes.loads(objstr) == expected
+
+
+def test_dumps_and_loads(types):
+    for obj in types:
+        assert amitypes.loads(amitypes.dumps(obj)) == obj

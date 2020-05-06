@@ -1,4 +1,5 @@
 import pytest
+import sys
 import typing
 import pickle
 import amitypes
@@ -14,7 +15,12 @@ TEST_PARAMS = [
 @pytest.fixture(scope='function')
 def typed_dict(request):
     name, fields = request.param
-    return name, fields, amitypes.TypedDict(name, fields)
+
+    # create the TypedDict and patch it into module namespace
+    cls = amitypes.TypedDict(name, fields)
+    setattr(sys.modules[__name__], cls.__name__, cls)
+
+    return name, fields, cls
 
 
 @pytest.mark.parametrize('typed_dict', TEST_PARAMS, indirect=True)

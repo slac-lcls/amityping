@@ -1,9 +1,11 @@
 import sys
-import abc
+import json
+import numpy
+import typing
+import inspect
 import importlib
-from mypy_extensions import _TypedDictMeta
 
-from amitypes.array import ArrayMeta
+from amitypes.array import NumPyTypeDict
 from amitypes.array import *    # noqa ignore=F405
 from amitypes.hsd import *      # noqa ignore=F405
 from amitypes.source import *   # noqa ignore=F405
@@ -13,14 +15,12 @@ __version__ = '1.1.1'
 
 
 def dumps(cls):
-    if type(cls) in [type, abc.ABCMeta]:
-        if cls.__module__ in ['builtins', '__main__']:
+    if inspect.isclass(cls):
+        if cls.__module__ in ['builtins']:
             return cls.__name__
         else:
             return "%s.%s" % (cls.__module__, cls.__name__)
-    elif issubclass(type(cls), _TypedDictMeta):
-        return "TypedDict('%s', %s)" % (cls.__name__, {k: dumps(v) for k, v in cls.__annotations__.items()})
-    elif issubclass(type(cls), ArrayMeta):
+    elif isinstance(cls, typing.TypeVar):
         return "%s.%s" % (cls.__module__, cls.__name__)
     else:
         return str(cls)
@@ -37,7 +37,25 @@ def loads(type_str):
 
     cls = eval(type_str.replace('amitypes.', ''))
 
-    if issubclass(type(cls), _TypedDictMeta):
-        setattr(sys.modules[__name__], cls.__name__, cls)
-
     return cls
+
+
+class TypeEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        nptopy = NumPyTypeDict.get(type(obj))
+        if nptopy is not None:
+            return nptopy(obj)
+        elif isinstance(obj, numpy.ndarray):
+            return obj.tolist()
+        elif inspect.isclass(obj):
+            if obj.__module__ in ['builtins']:
+                return obj.__name__
+            else:
+                return "%s.%s" % (obj.__module__, obj.__name__)
+        elif isinstance(obj, typing.TypeVar):
+            return "%s.%s" % (obj.__module__, obj.__name__)
+        elif isinstance(obj, (typing._GenericAlias, typing._SpecialForm)):
+            return str(obj)
+        else:
+            return json.JSONEncoder.default(self, obj)
