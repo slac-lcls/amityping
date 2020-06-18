@@ -5,7 +5,7 @@ import amitypes as at
 
 
 TEST_PARAMS = [
-    at.DataSource({'type': 'psana'}, 'fake_run', 'fake_evt'),
+    at.DataSource({'type': 'psana'}, 'fake_run', 'fake_step', 'fake_evt'),
     at.Group('mygrp', 'hdf5', 'cspad_1234'),
     at.Detector('xtcav', 'psana', 'camera', [1, 2, 3, 4]),
 ]

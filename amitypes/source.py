@@ -78,6 +78,7 @@ class DataSource(Serializable):
     cfg: typing.Dict
     key: int = 0
     run: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
+    step: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
     evt: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
 
 
