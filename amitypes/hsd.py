@@ -6,6 +6,8 @@ from amitypes.array import Array1d
 
 __all__ = [
     'TypedDict',
+    'PeakTimes',
+    'HSDSegementPeakTimes',
     'Peaks',
     'HSDSegmentPeaks',
     'HSDPeaks',
@@ -15,6 +17,34 @@ __all__ = [
     'HSDTypes',
 ]
 
+
+PeakTimes = typing.List[Array1d]
+
+
+HSDSegementPeakTimes = TypedDict(
+    "HSDSegementPeakTimes",
+    {
+        '0': PeakTimes,
+        '1': PeakTimes,
+        '2': PeakTimes,
+        '3': PeakTimes,
+        '4': PeakTimes,
+        '5': PeakTimes,
+        '6': PeakTimes,
+        '7': PeakTimes,
+        '8': PeakTimes,
+        '9': PeakTimes,
+        '10': PeakTimes,
+        '11': PeakTimes,
+        '12': PeakTimes,
+        '13': PeakTimes,
+        '14': PeakTimes,
+        '15': PeakTimes,
+    },
+    total=False)
+
+
+HSDPeakTimes = typing.Dict[int, HSDSegementPeakTimes]
 
 Peaks = typing.Tuple[typing.List[int], typing.List[Array1d]]
 
@@ -75,4 +105,4 @@ HSDWaveforms = typing.Dict[int, HSDSegmentWaveforms]
 HSDAssemblies = typing.TypeVar('HSDAssemblies')
 
 
-HSDTypes = {HSDPeaks, HSDWaveforms, HSDAssemblies}
+HSDTypes = {HSDPeakTimes, HSDPeaks, HSDWaveforms, HSDAssemblies}
