@@ -8,6 +8,7 @@ __all__ = [
     'TypedDict',
     'PeakTimes',
     'HSDSegementPeakTimes',
+    'HSDPeakTimes',
     'Peaks',
     'HSDSegmentPeaks',
     'HSDPeaks',
