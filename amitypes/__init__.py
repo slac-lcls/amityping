@@ -59,3 +59,6 @@ class TypeEncoder(json.JSONEncoder):
             return str(obj)
         else:
             return json.JSONEncoder.default(self, obj)
+
+
+T = typing.TypeVar('T')
