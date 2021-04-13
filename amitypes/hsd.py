@@ -1,6 +1,5 @@
 import typing
 from mypy_extensions import TypedDict
-
 from amitypes.array import Array1d
 
 

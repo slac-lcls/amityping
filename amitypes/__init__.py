@@ -1,17 +1,17 @@
 import sys
 import json
-import numpy
+# import numpy
 import typing
 import inspect
 import importlib
 
-from amitypes.array import NumPyTypeDict
+# from amitypes.array import NumPyTypeDict
 from amitypes.array import *    # noqa ignore=F405
 from amitypes.hsd import *      # noqa ignore=F405
 from amitypes.source import *   # noqa ignore=F405
 
 
-__version__ = '1.1.5'
+__version__ = '1.1.6'
 
 
 def dumps(cls):
@@ -43,12 +43,12 @@ def loads(type_str):
 class TypeEncoder(json.JSONEncoder):
 
     def default(self, obj):
-        nptopy = NumPyTypeDict.get(type(obj))
-        if nptopy is not None:
-            return nptopy(obj)
-        elif isinstance(obj, numpy.ndarray):
-            return obj.tolist()
-        elif inspect.isclass(obj):
+        # nptopy = NumPyTypeDict.get(type(obj))
+        # if nptopy is not None:
+        #     return nptopy(obj)
+        # elif isinstance(obj, numpy.ndarray):
+        #     return obj.tolist()
+        if inspect.isclass(obj):
             if obj.__module__ in ['builtins']:
                 return obj.__name__
             else:
