@@ -3,6 +3,10 @@ from amitypes.array import Array1d, Array2d
 
 
 __all__ = [
+    'MultiChannelInt',
+    'MultiChannelFloat',
+    'MultiChannelScalar',
+    'MultiChannelScalarTypes',
     'AcqirisTimes',
     'AcqirisWaveforms',
     'AcqirisChannel',
@@ -14,6 +18,20 @@ __all__ = [
     'MultiChannelWaveform',
     'MultiChannelWaveformTypes',
 ]
+
+
+class MultiChannelInt(Array1d):
+    pass
+
+
+class MultiChannelFloat(Array1d):
+    pass
+
+
+MultiChannelScalar = typing.Union[MultiChannelInt, MultiChannelFloat, Array1d]
+
+
+MultiChannelScalarTypes = {MultiChannelInt, MultiChannelFloat}
 
 
 class AcqirisTimes(Array2d):
