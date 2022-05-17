@@ -11,7 +11,7 @@ from amitypes.waveform import * # noqa ignore=F405
 from amitypes.source import *   # noqa ignore=F405
 
 
-__version__ = '1.1.9'
+__version__ = '1.1.10'
 
 
 def dumps(cls):
