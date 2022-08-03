@@ -9,6 +9,7 @@ from amitypes.array import *    # noqa ignore=F405
 from amitypes.hsd import *      # noqa ignore=F405
 from amitypes.waveform import * # noqa ignore=F405
 from amitypes.source import *   # noqa ignore=F405
+from amitypes.scan import *     # noqa ignore=F405
 
 
 __version__ = '1.1.10'
