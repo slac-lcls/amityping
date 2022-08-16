@@ -13,15 +13,25 @@ __all__ = [
 ]
 
 
-class ScanControls(Array1d):
+class ScanMeta(type):
+
+    @classmethod
+    def __instancecheck__(cls, inst) -> bool:
+        if not isinstance(inst, list) and not isinstance(inst, Array1d):
+            return False
+
+        return True
+
+
+class ScanControls(metaclass=ScanMeta):
     pass
 
 
-class ScanMonitors(Array1d):
+class ScanMonitors(metaclass=ScanMeta):
     pass
 
 
-class ScanLabels(Array1d):
+class ScanLabels(metaclass=ScanMeta):
     pass
 
 
