@@ -5,6 +5,7 @@ import typing
 import inspect
 import importlib
 
+from amitypes.array import NumPyTypeDict
 from amitypes.array import *    # noqa ignore=F405
 from amitypes.hsd import *      # noqa ignore=F405
 from amitypes.waveform import * # noqa ignore=F405
