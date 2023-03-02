@@ -69,3 +69,20 @@ def test_loads(type_map):
 def test_dumps_and_loads(types):
     for obj in types:
         assert amitypes.loads(amitypes.dumps(obj)) == obj
+
+
+def test_type_repr_str(type_map):
+    for obj, expected in type_map:
+        expstr = f"{{'key': {expected}}}"
+        objdict = {'key': amitypes.TypeDumper(obj)}
+        assert str(objdict) == expstr
+
+
+def test_type_repr_file(type_map, tmp_path):
+    outf = tmp_path / "out.txt"
+    for obj, expected in type_map:
+        expstr = f"{{'key': {expected}}}"
+        objdict = {'key': amitypes.TypeDumper(obj)}
+        outf.write_text(f"{objdict}")
+        objstr = outf.read_text()
+        assert objstr == expstr

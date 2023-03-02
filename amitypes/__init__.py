@@ -42,6 +42,15 @@ def loads(type_str):
     return cls
 
 
+class TypeDumper(object):
+
+    def __init__(self, ttype):
+        self.ttype = ttype
+
+    def __repr__(self):
+        return dumps(self.ttype)
+
+
 class TypeEncoder(json.JSONEncoder):
 
     def default(self, obj):
