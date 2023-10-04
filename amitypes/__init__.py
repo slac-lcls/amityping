@@ -18,7 +18,9 @@ __version__ = '1.1.13'
 
 def dumps(cls):
     if inspect.isclass(cls):
-        if cls.__module__ in ['builtins']:
+        if isinstance(cls, typing.GenericAlias):
+            return str(cls)
+        elif cls.__module__ in ['builtins']:
             return cls.__name__
         else:
             return "%s.%s" % (cls.__module__, cls.__name__)
@@ -60,7 +62,9 @@ class TypeEncoder(json.JSONEncoder):
         elif isinstance(obj, numpy.ndarray):
             return obj.tolist()
         elif inspect.isclass(obj):
-            if obj.__module__ in ['builtins']:
+            if isinstance(obj, typing.GenericAlias):
+                return str(obj)
+            elif obj.__module__ in ['builtins']:
                 return obj.__name__
             else:
                 return "%s.%s" % (obj.__module__, obj.__name__)

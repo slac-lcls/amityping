@@ -29,20 +29,20 @@ class Serializable:
             if not field.metadata.get('drop', False):
                 yield field
 
-    def _serialize(self) -> typing.Dict:
+    def _serialize(self) -> dict:
         state = self.__dict__.copy()
         for field in self._dropped():
             del state[field.name]
         return state
 
     @classmethod
-    def _deserialize(cls: typing.Type[T], data: typing.Dict) -> T:
+    def _deserialize(cls: typing.Type[T], data: dict) -> T:
         return cls(**data)
 
-    def __getstate__(self) -> typing.Dict:
+    def __getstate__(self) -> dict:
         return self._serialize()
 
-    def __setstate__(self, state: typing.Dict) -> None:
+    def __setstate__(self, state: dict) -> None:
         for field in self._dropped():
             state[field.name] = field.default
         self.__dict__.update(state)
@@ -61,7 +61,7 @@ class Group(Serializable, collections.abc.Mapping):
     name: str
     src: str
     type: str
-    data: typing.Dict = dataclasses.field(default_factory=dict)
+    data: dict = dataclasses.field(default_factory=dict)
 
     def __getitem__(self, key):
         return self.data[key]
@@ -75,7 +75,7 @@ class Group(Serializable, collections.abc.Mapping):
 
 @dataclasses.dataclass
 class DataSource(Serializable):
-    cfg: typing.Dict
+    cfg: dict
     key: int = 0
     run: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
     step: typing.Any = dataclasses.field(default=None, metadata={'drop': True})
