@@ -8,7 +8,9 @@ import amitypes
 def flattener():
     def flattener_func(cls):
         if hasattr(cls, "__name__"):
-            if cls.__module__ in ['builtins', '__main__']:
+            if isinstance(cls, typing.GenericAlias):
+                return cls, str(cls)
+            elif cls.__module__ in ['builtins', '__main__']:
                 return cls, cls.__name__
             else:
                 return cls, "%s.%s" % (cls.__module__, cls.__name__)

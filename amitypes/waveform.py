@@ -48,10 +48,10 @@ AcqirisChannel = Array1d
 AcqirisTypes = {AcqirisTimes, AcqirisWaveforms}
 
 
-GenericWfTimes = typing.List[Array1d]
+GenericWfTimes = list[Array1d]
 
 
-GenericWfWaveforms = typing.List[Array1d]
+GenericWfWaveforms = list[Array1d]
 
 
 GenericWfChannel = Array1d

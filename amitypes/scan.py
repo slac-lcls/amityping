@@ -1,4 +1,3 @@
-import typing
 from amitypes.array import Array1d
 
 
@@ -41,7 +40,7 @@ ScanTypes = {ScanControls, ScanMonitors, ScanLabels}
 ScanControlType = float
 
 
-ScanMonitorType = typing.Tuple[float, float]
+ScanMonitorType = tuple[float, float]
 
 
 ScanLabelType = str

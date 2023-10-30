@@ -18,7 +18,7 @@ __all__ = [
 ]
 
 
-PeakTimes = typing.List[Array1d]
+PeakTimes = list[Array1d]
 
 
 HSDSegementPeakTimes = TypedDict(
@@ -44,9 +44,9 @@ HSDSegementPeakTimes = TypedDict(
     total=False)
 
 
-HSDPeakTimes = typing.Dict[int, HSDSegementPeakTimes]
+HSDPeakTimes = dict[int, HSDSegementPeakTimes]
 
-Peaks = typing.Tuple[typing.List[int], typing.List[Array1d]]
+Peaks = tuple[list[int], list[Array1d]]
 
 
 HSDSegmentPeaks = TypedDict(
@@ -72,7 +72,7 @@ HSDSegmentPeaks = TypedDict(
                     total=False)
 
 
-HSDPeaks = typing.Dict[int, HSDSegmentPeaks]
+HSDPeaks = dict[int, HSDSegmentPeaks]
 
 
 HSDSegmentWaveforms = TypedDict(
@@ -99,7 +99,7 @@ HSDSegmentWaveforms = TypedDict(
                         total=False)
 
 
-HSDWaveforms = typing.Dict[int, HSDSegmentWaveforms]
+HSDWaveforms = dict[int, HSDSegmentWaveforms]
 
 
 HSDAssemblies = typing.TypeVar('HSDAssemblies')
