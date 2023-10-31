@@ -13,7 +13,7 @@ from amitypes.source import *   # noqa ignore=F405
 from amitypes.scan import *     # noqa ignore=F405
 
 
-__version__ = '1.2.0'
+__version__ = '1.2.1'
 
 
 def dumps(cls):
