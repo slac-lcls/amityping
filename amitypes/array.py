@@ -90,4 +90,4 @@ class Array3d(metaclass=Array3dMeta):
     pass
 
 
-Array = typing.Union[Array3d, Array2d, Array1d, list[float]]
+Array = typing.Union[Array3d, Array2d, Array1d, list[float], tuple[float]]
