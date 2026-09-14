@@ -70,7 +70,7 @@ class TypeEncoder(json.JSONEncoder):
                 return "%s.%s" % (obj.__module__, obj.__name__)
         elif isinstance(obj, typing.TypeVar):
             return "%s.%s" % (obj.__module__, obj.__name__)
-        elif isinstance(obj, (typing._GenericAlias, typing._SpecialForm)):
+        elif isinstance(obj, (typing._GenericAlias, typing._SpecialForm, typing.GenericAlias)):
             return str(obj)
         else:
             return json.JSONEncoder.default(self, obj)
