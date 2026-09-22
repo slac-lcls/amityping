@@ -7,10 +7,16 @@ import amitypes
 @pytest.fixture(scope='function')
 def flattener():
     def flattener_func(cls):
-        if hasattr(cls, "__name__"):
-            if isinstance(cls, typing.GenericAlias):
-                return cls, str(cls)
-            elif cls.__module__ in ['builtins', '__main__']:
+        # typing.get_origin() catches any subscripted generic (both PEP 585
+        # builtins like list[int] and typing-internal ones like Union[...]).
+        # It must be checked before hasattr(cls, "__name__"): typing's
+        # _GenericAlias forwards unresolved attributes to __origin__, so a
+        # subscripted alias like Union[A, B] otherwise looks like it has the
+        # bare name/module of unsubscripted Union.
+        if typing.get_origin(cls) is not None:
+            return cls, str(cls)
+        elif hasattr(cls, "__name__"):
+            if cls.__module__ in ['builtins', '__main__']:
                 return cls, cls.__name__
             else:
                 return cls, "%s.%s" % (cls.__module__, cls.__name__)
